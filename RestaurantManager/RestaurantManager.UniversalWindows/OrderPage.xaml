@@ -9,7 +9,8 @@
 
     <Page.TopAppBar>
         <AppBar x:Name="abOrder" Grid.ColumnSpan="3" IsOpen="True" IsSticky="True">
-            <AppBarButton x:Name="btnHomeOrder" Icon="Home" Label="Home" />
+            <AppBarButton x:Name="btnHomeOrder" Icon="Home" Label="Home"
+                          Click="btnHomeOrder_Click" />
         </AppBar>
     </Page.TopAppBar>
     

@@ -9,7 +9,8 @@
 
     <Page.TopAppBar>
         <AppBar x:Name="abExpedite" IsOpen="True" IsSticky="True">
-            <AppBarButton x:Name="btnHomeExpedite" Icon="Home" Label="Home"  />
+            <AppBarButton x:Name="btnHomeExpedite" Icon="Home" Label="Home" 
+                          Click="btnHomeExpedite_Click"/>
         </AppBar>
     </Page.TopAppBar>
 
