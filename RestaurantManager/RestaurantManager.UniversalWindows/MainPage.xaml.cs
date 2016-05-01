@@ -27,11 +27,21 @@ namespace RestaurantManager.UniversalWindows
             this.InitializeComponent();
         }
 
+        /// <summary>
+        /// Navigates to ExpeditePage
+        /// </summary>
+        /// <param name="sender">btnExpedite</param>
+        /// <param name="e">Click</param>
         private void btnExpedite_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(ExpeditePage));
         }
 
+        /// <summary>
+        /// Navigates to OrderPage
+        /// </summary>
+        /// <param name="sender">btnOrder</param>
+        /// <param name="e">Click</param>
         private void btnOrder_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(OrderPage));

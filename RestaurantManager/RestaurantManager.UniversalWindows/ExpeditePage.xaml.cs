@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Navigation;
 namespace RestaurantManager.UniversalWindows
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// An Expedite page that expedite orders.
     /// </summary>
     public sealed partial class ExpeditePage : Page
     {
@@ -26,7 +26,11 @@ namespace RestaurantManager.UniversalWindows
         {
             this.InitializeComponent();
         }
-
+        /// <summary>
+        /// Event handler that navigates back to the MainPage
+        /// </summary>
+        /// <param name="sender">btnHomeExpedite</param>
+        /// <param name="e">Click</param>
         private void btnHomeExpedite_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(MainPage));

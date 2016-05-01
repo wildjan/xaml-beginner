@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Navigation;
 namespace RestaurantManager.UniversalWindows
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// An Order page that manages orders.
     /// </summary>
     public sealed partial class OrderPage : Page
     {
@@ -26,7 +26,11 @@ namespace RestaurantManager.UniversalWindows
         {
             this.InitializeComponent();
         }
-
+        /// <summary>
+        /// Navigates back to the MainPage
+        /// </summary>
+        /// <param name="sender">btnHomeOrder</param>
+        /// <param name="e">Click</param>
         private void btnHomeOrder_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(MainPage));
