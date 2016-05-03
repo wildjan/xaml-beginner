@@ -13,7 +13,7 @@
                           Click="btnHomeOrder_Click" />
         </AppBar>
     </Page.TopAppBar>
-    
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <Grid.RowDefinitions>
@@ -34,15 +34,21 @@
         <TextBlock Grid.Row="1" Grid.Column="2" Text="Order Items:"
                    HorizontalAlignment="Center" VerticalAlignment="Center" />
 
-        <ListView Grid.Row="2" Grid.Column="0" >
-            
-        </ListView>
-                 
+        <ListView x:Name="MenuItems" Grid.Row="2" Grid.Column="0"
+                  DataContext="{StaticResource DataManager}"
+                  ItemsSource="{Binding Path=MenuItems}" />
+
+        <ListView x:Name="SpecialItems" Grid.Row="2" Grid.Column="2"
+                  DataContext="{StaticResource DataManager}"
+                  ItemsSource="{Binding Path=CurrentlySelectedMenuItems}" />
+
+
         <ListView Grid.Row="2" Grid.Column="2" />
 
         <Button Grid.Row="4" Grid.Column="0" Content="Add to Order"
                 HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <Button Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Content="Submit Order"
+        <Button Grid.Row="4" Grid.Column="1" Content="Submit Order" 
+                Grid.ColumnSpan="2"
                 HorizontalAlignment="Center" VerticalAlignment="Center" />
 
     </Grid>
