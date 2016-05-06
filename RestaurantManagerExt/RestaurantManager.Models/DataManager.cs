@@ -10,7 +10,6 @@ namespace RestaurantManager.Models
             this.OrderItems = new ObservableCollection<string>(
                 new List<string>
                 {
-                    "Steak, Chicken, Peas",
                     "Rice, Chicken",
                     "Hummus, Pita"
                 }
@@ -27,7 +26,7 @@ namespace RestaurantManager.Models
             };
 
             this.CurrentlySelectedMenuItems = new ObservableCollection<string>(new List<string>
-            {}
+            { }
             );
 
         }
@@ -38,10 +37,13 @@ namespace RestaurantManager.Models
 
         public void submitOrder()
         {
+            string order = "";
             foreach (string item in CurrentlySelectedMenuItems)
             {
-                OrderItems.Add(item);
+                order += item + ", ";
             }
+            order = order.Substring(0, order.Length - 2);
+            OrderItems.Add(order);
             CurrentlySelectedMenuItems.Clear();
         }
 

@@ -19,16 +19,22 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.9*" />
-            <RowDefinition Height="0.1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <GridView Grid.Row="0" Margin="12, 48" FontSize="24" 
-                  ItemsSource="{Binding Path=OrderItems}">
-        </GridView>
+        <ListView Grid.Row="1"  ItemsSource="{Binding Path=OrderItems}" Margin="10">
 
-        <Button  Grid.Row="1" x:Name="btnClearAllOrders" Content="Clear All Orders"
-                 HorizontalAlignment="Center" VerticalAlignment="Center"
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+        </ListView>
+        <Button  Grid.Row="2" x:Name="btnClearAllOrders" Content="Clear All Orders"
+                 HorizontalAlignment="Center"
                  Click="btnClearAllOrders_Click"/>
 
     </Grid>
