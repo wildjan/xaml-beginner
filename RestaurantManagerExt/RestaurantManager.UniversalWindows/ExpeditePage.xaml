@@ -24,8 +24,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ListView Grid.Row="1"  ItemsSource="{Binding Path=OrderItems}" Margin="10">
-
+        <ListView Grid.Row="1" ItemsSource="{Binding OrderItems}" Margin="10">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Vertical" />
