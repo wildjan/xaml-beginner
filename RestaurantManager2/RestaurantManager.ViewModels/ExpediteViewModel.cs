@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Windows.UI.Popups;
 
-namespace RestaurantManager.ViewModels
+namespace RestaurantManager.Models
 {
     public class ExpediteViewModel : ViewModel
     {

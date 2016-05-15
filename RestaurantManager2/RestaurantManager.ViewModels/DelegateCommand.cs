@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace RestaurantManager.ViewModels
+namespace RestaurantManager.Models
 {
     public class DelegateCommand<T> : ICommand
     {
