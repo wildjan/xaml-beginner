@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <i:Interaction.Behaviors>
-        <extensions:RightClickWarnBehavior Title="Thank you" Message="Thank you for trying out the demo." />
+        <extensions:RightClickWarnBehavior Title="Thank you" Message="Thanks to the team who developed this." />
     </i:Interaction.Behaviors>
     <Page.Resources>
         <ControlTemplate x:Key="ButtonRoundedCornersTemplate">
@@ -29,9 +29,17 @@
             <ColumnDefinition Width="0.50*" />
             <ColumnDefinition Width="0.50*" />
         </Grid.ColumnDefinitions>
-        <TextBlock Text="Restaurant Manager" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource HeaderTextBlockStyle}" />
-        <TextBlock Text="Internal Test Version" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource SubheaderTextBlockStyle}" />
-        <Button Content="Go to Orders View" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Click="ExpeditePage_Click" Template="{StaticResource ButtonRoundedCornersTemplate}" />
-        <Button Content="Submit Order" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Click="OrderPage_Click" Template="{StaticResource ButtonRoundedCornersTemplate}" />
+        <TextBlock Text="Restaurant Manager" HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="0"
+                   Grid.ColumnSpan="2" Style="{StaticResource HeaderTextBlockStyle}" />
+        <TextBlock Text="Internal Test Version" HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"
+                   Grid.ColumnSpan="2" Style="{StaticResource SubheaderTextBlockStyle}" />
+        <Button Content="Go to Orders View" HorizontalAlignment="Center" VerticalAlignment="Center"
+                Grid.Row="2" Grid.Column="0" Click="ExpeditePage_Click"
+                Template="{StaticResource ButtonRoundedCornersTemplate}" />
+        <Button Content="Submit Order" HorizontalAlignment="Center" VerticalAlignment="Center"
+                Grid.Row="2" Grid.Column="1" Click="OrderPage_Click"
+                Template="{StaticResource ButtonRoundedCornersTemplate}" />
     </Grid>
 </Page>
