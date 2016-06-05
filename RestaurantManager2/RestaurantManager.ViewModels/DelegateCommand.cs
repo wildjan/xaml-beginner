@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace RestaurantManager.Models
+namespace RestaurantManager.ViewModels
 {
     public class DelegateCommand<T> : ICommand
     {
-        private readonly Func<T, bool> _canExecuteMethod;
+        private readonly Predicate<T> _canExecuteMethod;
         private readonly Action<T> _executeMethod;
 
         #region Constructors
@@ -15,7 +15,7 @@ namespace RestaurantManager.Models
         {
         }
 
-        public DelegateCommand(Action<T> executeMethod, Func<T, bool> canExecuteMethod)
+        public DelegateCommand(Action<T> executeMethod, Predicate<T> canExecuteMethod)
         {
             _executeMethod = executeMethod;
             _canExecuteMethod = canExecuteMethod;

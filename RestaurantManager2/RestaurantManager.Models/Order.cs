@@ -24,5 +24,10 @@ namespace RestaurantManager.Models
         {
             return String.Join(Environment.NewLine, Items.Select(i => i.Title));
         }
+
+        public Order()
+        {
+            Id = Guid.NewGuid().ToString().GetHashCode();
+        }
     }
 }
