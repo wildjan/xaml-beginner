@@ -9,10 +9,13 @@ namespace RestaurantManager.Extensions
 {
     public class RightClickWarnBehavior : DependencyObject, IBehavior
     {
-        public string Message { get; set; } = "Are U kidding?";
+        public string Message { get; set; }
         public string Title { get; set; }
 
-        public DependencyObject AssociatedObject { get; private set; }
+        public DependencyObject AssociatedObject
+        {
+            get; private set;
+        }
 
         public void Attach(DependencyObject associatedObject)
         {
@@ -34,7 +37,6 @@ namespace RestaurantManager.Extensions
 
         private async void Page_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            // should be this.Message, this.Title?
             await new MessageDialog(Message, Title).ShowAsync();
         }
     }

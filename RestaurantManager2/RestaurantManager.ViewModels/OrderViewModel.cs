@@ -1,65 +1,37 @@
-﻿using RestaurantManager.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System;
+using Windows.UI.Popups;
 
-namespace RestaurantManager.ViewModels
+namespace RestaurantManager.Models
 {
     public class OrderViewModel : ViewModel
     {
-        private ObservableCollection<MenuItem> _menuItems = new ObservableCollection<MenuItem>();
-        private ObservableCollection<MenuItem> _selectedMenuItem = new ObservableCollection<MenuItem>();
-        private string _specialRequestText = string.Empty;
-        public ObservableCollection<MenuItem> CurrentlySelectedMenuItems { get; private set; }
-        public DelegateCommand<int> AddToOrderCommand { get; private set; }
+        public DelegateCommand<MenuItem> AddToOrderCommand { get; private set; }
         public DelegateCommand<string> SubmitOrderCommand { get; private set; }
 
         public OrderViewModel()
         {
-            AddToOrderCommand = new DelegateCommand<int>(AddToOrderExecute, AddToOrderCanExecute);
-            SubmitOrderCommand = new DelegateCommand<string>(SubmitOrderExecute, SubmitOrderCanExecute);
-            this.CurrentlySelectedMenuItems = new ObservableCollection<MenuItem>();
+            AddToOrderCommand = new DelegateCommand<MenuItem>(AddToOrderExecute);
+            SubmitOrderCommand = new DelegateCommand<string>(SubmitOrderExecute);
         }
 
-        private void AddToOrderExecute(int index)
+        private void AddToOrderExecute(MenuItem ChosenItem)
         {
-            if (index >= 0) this.CurrentlySelectedMenuItems.Add(this.MenuItems[index]);
+            CurrentlySelectedMenuItems.Add(ChosenItem);
         }
 
-        private bool AddToOrderCanExecute(int id)
+        private void SubmitOrderExecute(string message)
         {
-            if (id >= 0) return true;
-            return false;
-        }
+            Order NewOrder = new Order { Complete = false,
+                                         Expedite = false,
+                                         SpecialRequests = SpecialRequests,
+                                         Table = new Table { Description = "Test table" },
+                                         Items = CurrentlySelectedMenuItems.ToList() };
+            Repository.Orders.Add(NewOrder);
+            new MessageDialog(message).ShowAsync();
 
-        private void SubmitOrderExecute(string obj)
-        {
-            var rnd = new Random();
-            int tableIndex = rnd.Next((int)base.Repository.Tables.Count());
-
-            base.Repository.Orders.Add(
-                new Order()
-                {
-                    Complete = false,
-                    Expedite = true,
-                    SpecialRequests = this.SpecialRequestText,
-                    Table = base.Repository.Tables[tableIndex],
-                    Items = CurrentlySelectedMenuItems.ToList<MenuItem>()
-                });
-            this.CurrentlySelectedMenuItems.Clear();
-            SpecialRequestText = String.Empty;
-            // SubmitOrderCommand.RaiseCanExecuteChanged(); 
-            // Not sure that this is a right place for this.Maybe it will be better to put in a CurrentlySelectedMenuItems setter
-            // TODO:Have to navigate to Expedite page I guess... Should I Use button event?
-
-            // Explanation: This is a bad idea with a true MVVM app (seperation of view concerns from logic) but for simplicity sake:
-            new Windows.UI.Popups.MessageDialog("Order has been submitted").ShowAsync();
-        }
-
-        private bool SubmitOrderCanExecute(string obj)
-        {
-            return this.CurrentlySelectedMenuItems.Count > 0;
+            CurrentlySelectedMenuItems.Clear();
         }
 
         protected override void OnDataLoaded()
@@ -69,38 +41,40 @@ namespace RestaurantManager.ViewModels
             this.CurrentlySelectedMenuItems = new ObservableCollection<MenuItem>
             {
                 this.MenuItems[3],
-                this.MenuItems[5],
-                this.MenuItems[7],
+                this.MenuItems[5]
             };
         }
 
+        private ObservableCollection<MenuItem> _menuItems;
+        private ObservableCollection<MenuItem> _currentlySelectedMenuItems;
+
         public ObservableCollection<MenuItem> MenuItems
         {
-            get { return _menuItems; }
+            get { return this._menuItems; }
             set
             {
-                _menuItems = value;
-                NotifyPropertyChanged();
-            }
-        }
-        public ObservableCollection<MenuItem> SelectedMenuItem
-        {
-            get { return _selectedMenuItem; }
-            set
-            {
-                _selectedMenuItem = value;
-                NotifyPropertyChanged();
+                if (value != this._menuItems)
+                {
+                    this._menuItems = value;
+                    NotifyPropertyChanged("MenuItems");
+                }
             }
         }
 
-        public string SpecialRequestText
+        public ObservableCollection<MenuItem> CurrentlySelectedMenuItems
         {
-            get { return _specialRequestText; }
+            get { return this._currentlySelectedMenuItems; }
             set
             {
-                if (_specialRequestText != value) _specialRequestText = value;
-                base.NotifyPropertyChanged();
+                if (value != this._currentlySelectedMenuItems)
+                {
+                    this._currentlySelectedMenuItems = value;
+                    NotifyPropertyChanged("CurrentlySelectedMenuItems");
+                }
             }
         }
+
+        public string SpecialRequests { get; set; }
+
     }
 }

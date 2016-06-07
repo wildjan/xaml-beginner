@@ -9,11 +9,11 @@ namespace RestaurantManager.Models
 
         public event NotifyCollectionChangedEventHandler CollectionChanged;
 
-        public void FireCollectionChanged(NotifyCollectionChangedAction action, MenuItem changedItem)
+        public void NotifyCollectionChanged(NotifyCollectionChangedAction action, MenuItem changedItem)
         {
             this.CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, changedItem));
         }
-        public void FireCollectionChanged(NotifyCollectionChangedAction action, MenuItem oldItem, MenuItem newItem)
+        public void NotifyCollectionChanged(NotifyCollectionChangedAction action, MenuItem oldItem, MenuItem newItem)
         {
             this.CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, newItem, oldItem));
         }
@@ -28,20 +28,20 @@ namespace RestaurantManager.Models
             {
                 var _originalItem = _items[index];
                 _items[index] = value;
-                FireCollectionChanged(NotifyCollectionChangedAction.Replace, _originalItem, value);
+                NotifyCollectionChanged(NotifyCollectionChangedAction.Replace, _originalItem, value);
             }
         }
-
+        
         public void Add(MenuItem item)
         {
             _items.Add(item);
-            this.FireCollectionChanged(NotifyCollectionChangedAction.Add, item);
+            this.NotifyCollectionChanged(NotifyCollectionChangedAction.Add, item);
         }
 
         public void Remove(MenuItem item)
         {
             _items.Remove(item);
-            this.FireCollectionChanged(NotifyCollectionChangedAction.Remove, item);
+            this.NotifyCollectionChanged(NotifyCollectionChangedAction.Remove, item);
         }
 
     }

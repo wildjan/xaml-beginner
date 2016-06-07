@@ -14,10 +14,5 @@ namespace RestaurantManager.UniversalWindows
         {
             this.Frame.Navigate(typeof(MainPage));
         }
-
-        private void FlyoutExpediteButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(ExpeditePage));
-        }
     }
 }

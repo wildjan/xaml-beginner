@@ -23,9 +23,7 @@ namespace RestaurantManager.Models
             this.Tables = new List<Table>
             {
                 new Table { Description = "Back-Corner Two Top" },
-                new Table { Description = "Front Booth" },
-                new Table { Description = "Somewhere in the Middle" },
-                new Table { Description = "The one with a dead cockroach" }
+                new Table { Description = "Front Booth" }
             };
 
             this.StandardMenuItems = new ObservableCollection<MenuItem>
