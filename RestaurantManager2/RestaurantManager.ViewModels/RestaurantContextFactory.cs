@@ -1,7 +1,7 @@
-﻿using RestaurantManager.Models;
+﻿using RestaurantManager.ViewModels;
 using System.Threading.Tasks;
 
-namespace RestaurantManager.Models
+namespace RestaurantManager.ViewModels
 {
     public static class RestaurantContextFactory
     {

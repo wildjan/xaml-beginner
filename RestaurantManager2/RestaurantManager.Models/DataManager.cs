@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 //using RestaurantManager.ViewModels;
 
-namespace RestaurantManager.Models
+namespace RestaurantManager.ViewModels
 {
     /// <summary>
     /// Abstract class notifies changes

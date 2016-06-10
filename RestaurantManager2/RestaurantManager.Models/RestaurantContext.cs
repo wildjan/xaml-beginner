@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RestaurantManager.Models
+namespace RestaurantManager.ViewModels
 {
     public sealed class RestaurantContext
     {

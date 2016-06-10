@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 
-namespace RestaurantManager.Models
+namespace RestaurantManager.ViewModels
 {
     public class MenuItems : INotifyCollectionChanged
     {

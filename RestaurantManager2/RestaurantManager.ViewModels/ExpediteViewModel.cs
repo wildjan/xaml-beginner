@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Popups;
 
-namespace RestaurantManager.Models
+namespace RestaurantManager.ViewModels
 {
     public class ExpediteViewModel : ViewModel
     {

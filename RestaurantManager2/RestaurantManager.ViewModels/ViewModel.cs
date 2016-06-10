@@ -1,8 +1,8 @@
-﻿using RestaurantManager.Models;
+﻿using RestaurantManager.ViewModels;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace RestaurantManager.Models
+namespace RestaurantManager.ViewModels
 {
     public abstract class ViewModel : INotifyPropertyChanged
     {
