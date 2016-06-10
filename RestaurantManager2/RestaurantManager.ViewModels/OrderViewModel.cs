@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Popups;
@@ -9,6 +10,8 @@ namespace RestaurantManager.ViewModels
     {
         public DelegateCommand<MenuItem> AddToOrderCommand { get; private set; }
         public DelegateCommand<string> SubmitOrderCommand { get; private set; }
+
+        private string _specialRequestsText = String.Empty;
 
         public OrderViewModel()
         {
@@ -25,13 +28,13 @@ namespace RestaurantManager.ViewModels
         {
             Order NewOrder = new Order { Complete = false,
                                          Expedite = false,
-                                         SpecialRequests = SpecialRequests,
+                                         SpecialRequests = SpecialRequestsText,
                                          Table = new Table { Description = "Test table" },
                                          Items = CurrentlySelectedMenuItems.ToList() };
             Repository.Orders.Add(NewOrder);
             new MessageDialog(message).ShowAsync();
-
             CurrentlySelectedMenuItems.Clear();
+            SpecialRequestsText = String.Empty;
         }
 
         protected override void OnDataLoaded()
@@ -74,7 +77,15 @@ namespace RestaurantManager.ViewModels
             }
         }
 
-        public string SpecialRequests { get; set; }
+        public string SpecialRequestsText
+        {
+            get { return _specialRequestsText; }
+            set
+            {
+                if (_specialRequestsText != value) _specialRequestsText = value;
+                base.NotifyPropertyChanged("SpecialRequests");
+            }
+        }
 
     }
 }
