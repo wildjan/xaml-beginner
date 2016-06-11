@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Popups;
+using RestaurantManager.Models;
 
 namespace RestaurantManager.ViewModels
 {
@@ -41,11 +42,7 @@ namespace RestaurantManager.ViewModels
         {
             this.MenuItems = base.Repository.StandardMenuItems;
 
-            this.CurrentlySelectedMenuItems = new ObservableCollection<MenuItem>
-            {
-                this.MenuItems[3],
-                this.MenuItems[5]
-            };
+            this.CurrentlySelectedMenuItems = new ObservableCollection<MenuItem> { };
         }
 
         private ObservableCollection<MenuItem> _menuItems;
@@ -79,11 +76,11 @@ namespace RestaurantManager.ViewModels
 
         public string SpecialRequestsText
         {
-            get { return _specialRequestsText; }
+            get { return this._specialRequestsText; }
             set
             {
-                if (_specialRequestsText != value) _specialRequestsText = value;
-                base.NotifyPropertyChanged("SpecialRequests");
+                if (this._specialRequestsText != value) this._specialRequestsText = value;
+                base.NotifyPropertyChanged("SpecialRequestsText");
             }
         }
 

@@ -1,4 +1,4 @@
-﻿using RestaurantManager.ViewModels;
+﻿using RestaurantManager.Models;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Popups;
+using RestaurantManager.Models;
 
 namespace RestaurantManager.ViewModels
 {

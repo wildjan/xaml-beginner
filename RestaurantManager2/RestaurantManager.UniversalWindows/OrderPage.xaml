@@ -37,7 +37,8 @@
         <TextBlock Grid.Row="2" Grid.Column="2" Text="Order Items:" />
         <TextBox x:Name="SpecialRequests" Grid.Row="3" Grid.Column="1" 
                  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                 Text="{Binding SpecialRequestsText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                 Text="{Binding SpecialRequestsText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                 TextAlignment="Left" Margin="10" TextWrapping="Wrap"/>
         
         <ListView x:Name="AvailableMenuItems" Grid.Row="2" Grid.RowSpan="3" Grid.Column="0" Margin="10" 
                   ItemsSource="{Binding MenuItems}" DisplayMemberPath="Title" />
