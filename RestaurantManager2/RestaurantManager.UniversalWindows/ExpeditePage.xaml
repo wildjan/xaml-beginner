@@ -1,4 +1,5 @@
 ﻿<Page
+    x:Name="ExpeditePageElement"
     x:Class="RestaurantManager.UniversalWindows.ExpeditePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -71,7 +72,12 @@
                                 </SolidColorBrush>
                             </Border.Background>
                         </Border>
-                        <Button Grid.Row="6" Style="{StaticResource DeleteButton}" />
+                        <Button Grid.Row="6" Style="{StaticResource DeleteButton}"
+                                Command="{Binding DataContext.DeleteOrderCommand,
+                                ElementName=ExpeditePageElement}"
+                                CommandParameter="{Binding Id}">
+                            
+                        </Button>
                     </Grid>
                 </DataTemplate>
             </GridView.ItemTemplate>

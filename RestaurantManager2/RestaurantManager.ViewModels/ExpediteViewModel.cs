@@ -21,7 +21,7 @@ namespace RestaurantManager.ViewModels
         protected override void OnDataLoaded()
         {
             this.OrderItems = base.Repository.Orders;
-            //NotifyPropertyChanged("OrderItems");
+            NotifyPropertyChanged("OrderItems");
         }
 
         //public List<Order> OrderItems => Repository?.Orders;
@@ -44,9 +44,7 @@ namespace RestaurantManager.ViewModels
 
         private void DeleteOrderExecute(int Id)
         {
-            Order _orderToRemove = new Order();
-            _orderToRemove = (Order)OrderItems.Where(item => item.Id == Id).Single();
-            OrderItems.Remove(_orderToRemove);
+             OrderItems.RemoveAt(Id);
         }
 
         private bool ClearAllOrdersCanExecute(string obj)
@@ -58,7 +56,7 @@ namespace RestaurantManager.ViewModels
         {
             this.OrderItems.Clear();
             base.Repository.Orders.Clear();
-
+            ClearAllOrdersCommand?.RaiseCanExecuteChanged();
         }
     }
 }
