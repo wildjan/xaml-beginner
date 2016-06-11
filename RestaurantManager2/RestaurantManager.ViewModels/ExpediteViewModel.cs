@@ -44,7 +44,9 @@ namespace RestaurantManager.ViewModels
 
         private void DeleteOrderExecute(int Id)
         {
-             OrderItems.RemoveAt(Id);
+            Order _orderToRemove = new Order();
+            _orderToRemove = (Order)OrderItems.Where(item => item.Id == Id).Single();
+            OrderItems.Remove(_orderToRemove);
         }
 
         private bool ClearAllOrdersCanExecute(string obj)
