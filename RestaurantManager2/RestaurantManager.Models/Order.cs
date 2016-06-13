@@ -7,6 +7,8 @@ namespace RestaurantManager.Models
 {
     public class Order
     {
+        private static int _nextId = 0;
+
         [Key]
         public int Id { get; set; }
 
@@ -27,7 +29,8 @@ namespace RestaurantManager.Models
 
         public Order()
         {
-            Id = Guid.NewGuid().ToString().GetHashCode();
+            Id = _nextId;
+            _nextId = _nextId + 1;
         }
     }
 }
