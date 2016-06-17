@@ -3,10 +3,15 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SQLiteSimple"
+    xmlns:vm="using:SQLiteSimple"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.DataContext>
+        <vm:PeopleViewModel />
+    </Page.DataContext>
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.50*"/>
@@ -25,7 +30,17 @@
         <TextBlock Grid.Row="3" Grid.Column="0" Text="Database Items:" />
         <TextBlock Grid.Row="0" Grid.Column="1" Text="Edit Item" />
 
-        <ListView x:Name="ColectionItems" Grid.Row="1" Grid.Column="0" Margin="10" />
+        <ListView Grid.Row="1" Grid.Column="0" Margin="16" ItemsSource="{Binding People}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Top" Text="{Binding ID}" Width="20"/>
+                        <TextBlock VerticalAlignment="Bottom" Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        
         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Margin="0">
             <Button Content="Delete Selected" />
             <Button Content="Clear List" />
@@ -33,7 +48,16 @@
             <Button Content="Reset Collection" />
         </StackPanel>
 
-        <ListView x:Name="DBItems" Grid.Row="4" Grid.Column="0" Margin="16" />
+        <ListView x:Name="DBItems" Grid.Row="4" Grid.Column="0" Margin="16" ItemsSource="{Binding PeopleDB}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Top" Text="{Binding ID}" Width="20"/>
+                        <TextBlock VerticalAlignment="Bottom" Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
         <StackPanel Grid.Row="5" Grid.Column="0" Orientation="Horizontal" Margin="4">
             <Button Content="Create Table using Collection" />
             <Button Content="Delete Selected" />

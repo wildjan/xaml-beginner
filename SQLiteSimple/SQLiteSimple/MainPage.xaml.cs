@@ -2,6 +2,9 @@
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Controls;
 using System;
+using System.IO;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -16,57 +19,48 @@ namespace SQLiteSimple
         {
             this.InitializeComponent();
 
-            SQLiteConnection DB = new SQLiteConnection("peopleDB.sqlite");
 
-            DB.CreateTable<Person>();
+            var path = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
+            var fname = "peopleDB.sqlite";
+            var dbPath = Path.Combine(path, fname);
 
-            int countPeople = DB.Table<Person>().Count();
+            SQLiteAsyncConnection DB = new SQLiteAsyncConnection(dbPath);
 
-            // if the DB has information, start app with that data
-            if (countPeople >= 1)
+            DB.CreateTableAsync<Person>();
+
+            DB.ExecuteScalarAsync<int>("select count(*) from Person").ContinueWith((t) =>
             {
-                DBtoList();
-                DisplayDB();
-            }
-            // if the DB is empty, initialize the collection and load that info
-            else
-            {
-                initPeopleCollection();
-                loadCollection();
-            }
+                Debug.WriteLine(string.Format("Found '{0}' person items.", t.Result));
+                int countPeople = t.Result;
+            });
         }
+    }
 
-        private void DBtoList()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void DisplayDB()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void loadCollection()
-        {
-            throw new NotImplementedException();
-        }
-
-        ObservableCollection<Person> people = new ObservableCollection<Person>();
-
-        public class Person
+    public class Person
         {
             [PrimaryKey]
             public int ID { get; set; }
             public string Name { get; set; }
         }
 
-        private void initPeopleCollection()
+    public class PeopleViewModel
+    {
+        public PeopleViewModel()
         {
-            people.Clear();
-
-            people.Add(new Person() { ID = 0, Name = "Chris" });
-            people.Add(new Person() { ID = 1, Name = "Sage" });
-            people.Add(new Person() { ID = 2, Name = "Daren" });
+            People.Add(new Person() { ID = 0, Name = "Chris" });
+            People.Add(new Person() { ID = 1, Name = "Sage" });
+            People.Add(new Person() { ID = 2, Name = "Daren" });
         }
+
+        public ObservableCollection<Person> People { get; set; } = new ObservableCollection<Person>();
+
+        public Person CurrentPerson { get; set; }
+
+        public ObservableCollection<Person> PeopleDB { get; set; } = new ObservableCollection<Person>();
+
+        public Person CurrentDBPerson { get; set; }
+
+
     }
+
 }
