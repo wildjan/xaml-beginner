@@ -14,20 +14,25 @@ namespace SQLiteBinding.Models
     {
         public SampleData()
         {
-            this.People = new ObservableCollection<Person>()
+            this.people = new ObservableCollection<Person>()
             { 
                 new Person() { ID = 0, Name = "Chris" },
                 new Person() { ID = 1, Name = "Sage" },
                 new Person() { ID = 2, Name = "Daren"  }
             };
 
-            this.CurrentPerson = new Person();
+            this.currentPerson = new Person();
 
-            this.PeopleDB = new ObservableCollection<Person>();
+            this.peopleDB = new ObservableCollection<Person>();
 
-            this.CurrentDBPerson = new Person();
+            this.currentDBPerson = new Person();
 
-            DB.CreateTableAsync<Person>();
+            Debug.WriteLine(path);
+
+            DB.CreateTableAsync<Person>().ContinueWith((results) =>
+            {
+                Debug.WriteLine("Table people created!");
+            });
 
             DB.ExecuteScalarAsync<int>("select count(*) from Person").ContinueWith((t) =>
             {
@@ -37,35 +42,63 @@ namespace SQLiteBinding.Models
 
             if (countPeople >= 1)
             {
-                //DBtoList();
-                //DisplayDB();
+                DBtoList();
+                DisplayDB();
             }
             else
             {
-                //initPeopleCollection();
-                //loadCollection();
+                loadCollection();
             }
+        }
 
+        private async void DisplayDB()
+        {
+            List<Person> queryPeople = await DB.Table<Person>().ToListAsync();
+
+            foreach (Person p in queryPeople)
+            {
+                peopleDB.Clear();
+                peopleDB.Add(new Person() { ID = p.ID, Name = p.Name });
+            }
+        }
+
+        private async void loadCollection()
+        {
+            foreach (Person insertPerson in people)
+            {
+                await DB.InsertAsync(insertPerson).ContinueWith((t) =>
+                 {
+                     Debug.WriteLine("New customer ID: {0}", insertPerson.ID);
+                 });
+            }
+        }
+
+        private async void DBtoList()
+        {
+            List<Person> queryPeople = await DB.Table<Person>().ToListAsync();
+
+            foreach (Person p in queryPeople)
+            {
+                people.Clear();
+                people.Add(new Person() { ID = p.ID, Name = p.Name });
+            }
         }
 
         static string path = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
         static string fname = "peopleDB.sqlite";
         static string dbPath = Path.Combine(path, fname);
-        static int countPeople;
 
         SQLiteAsyncConnection DB = new SQLiteAsyncConnection(dbPath);
 
+        static int countPeople;
 
+        public ObservableCollection<Person> people { get; set; } = new ObservableCollection<Person>();
 
-        public ObservableCollection<Person> People { get; set; } = new ObservableCollection<Person>();
+        public Person currentPerson { get; set; }
 
-        public Person CurrentPerson { get; set; }
+        public ObservableCollection<Person> peopleDB { get; set; } = new ObservableCollection<Person>();
 
-        public ObservableCollection<Person> PeopleDB { get; set; } = new ObservableCollection<Person>();
-
-        public Person CurrentDBPerson { get; set; }
-
-
+        public Person currentDBPerson { get; set; }
 
     }
 }
