@@ -14,17 +14,11 @@ namespace SQLiteBinding.Models
         public ObservableCollection<Person> peopleDB { get; set; }
         PeopleDB _db;
 
-        public DataContext()
-        {
-            this.people = new ObservableCollection<Person>();
-            this.peopleDB = new ObservableCollection<Person>();
-            InitializeContextAsync();
-
-        }
-
         public async Task InitializeContextAsync()
         {
-          
+            //DO NOT REMOVE: Simulates network congestion
+            await Task.Delay(TimeSpan.FromSeconds(2.5d));
+
             this.people = new ObservableCollection<Person>()
             {
                 new Person() { ID = 0, Name = "Chris" },
@@ -46,9 +40,6 @@ namespace SQLiteBinding.Models
             {
                 this.peopleDB.Add(new Person() { ID = p.ID, Name = p.Name });
             }
-
-            //DO NOT REMOVE: Simulates network congestion
-            await Task.Delay(TimeSpan.FromSeconds(5.5d));
         }
     }
 }
