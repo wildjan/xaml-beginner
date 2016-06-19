@@ -98,8 +98,10 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataContext.cs" />
+    <Compile Include="Models\People.cs" />
+    <Compile Include="Models\PeopleDB.cs" />
     <Compile Include="Models\Person.cs" />
-    <Compile Include="Models\SampleData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

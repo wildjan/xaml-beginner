@@ -40,6 +40,8 @@ namespace SQLiteBinding.Models
                 countPeople = t.Result;
             });
 
+
+
             if (countPeople >= 1)
             {
                 DBtoList();
@@ -48,16 +50,17 @@ namespace SQLiteBinding.Models
             else
             {
                 loadCollection();
+                DisplayDB();
             }
         }
 
         private async void DisplayDB()
         {
             List<Person> queryPeople = await DB.Table<Person>().ToListAsync();
+            peopleDB.Clear();
 
             foreach (Person p in queryPeople)
             {
-                peopleDB.Clear();
                 peopleDB.Add(new Person() { ID = p.ID, Name = p.Name });
             }
         }
@@ -76,10 +79,10 @@ namespace SQLiteBinding.Models
         private async void DBtoList()
         {
             List<Person> queryPeople = await DB.Table<Person>().ToListAsync();
+            people.Clear();
 
             foreach (Person p in queryPeople)
             {
-                people.Clear();
                 people.Add(new Person() { ID = p.ID, Name = p.Name });
             }
         }
@@ -90,7 +93,7 @@ namespace SQLiteBinding.Models
 
         SQLiteAsyncConnection DB = new SQLiteAsyncConnection(dbPath);
 
-        static int countPeople;
+        private static int countPeople;
 
         public ObservableCollection<Person> people { get; set; } = new ObservableCollection<Person>();
 
