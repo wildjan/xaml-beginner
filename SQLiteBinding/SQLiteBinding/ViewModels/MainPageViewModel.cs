@@ -38,5 +38,43 @@ namespace SQLiteBinding.ViewModels
                 NotifyPropertyChanged("PeopleDB");
             }
         }
+
+        private Person _selectedPerson;
+        private string _editNameText = String.Empty;
+        private string _editIDText = String.Empty;
+
+        public Person SelectedPerson
+        {
+            get { return this._selectedPerson; }
+            set
+            {
+                if (this._selectedPerson != null)
+                {
+                    this._selectedPerson = value;
+                    EditIDText = _selectedPerson.ID.ToString();
+                    EditNameText = this._selectedPerson.Name;
+                        }
+                base.NotifyPropertyChanged("SelectedPerson");
+            }
+        }
+
+        public string EditNameText
+        {
+            get { return this._editNameText; }
+            set
+            {
+                if (this._editIDText != value) this._editNameText = value;
+                base.NotifyPropertyChanged("EditNameText");
+            }
+        }
+
+        public string EditIDText
+        {
+            get { return this._editIDText; }
+            private set
+            {
+                if (this._editIDText != value) this._editIDText = value;
+            }
+        }
     }
 }

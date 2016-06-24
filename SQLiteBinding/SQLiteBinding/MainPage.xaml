@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SQLiteBinding"
     xmlns:vm="using:SQLiteBinding.ViewModels"
+    xmlns:m="using:SQLiteBinding.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -30,12 +31,12 @@
         <TextBlock Grid.Row="3" Grid.Column="0" Text="Database Items:" />
         <TextBlock Grid.Row="0" Grid.Column="1" Text="Edit Item" />
 
-        <ListView Grid.Row="1" Grid.Column="0" Margin="16" ItemsSource="{Binding People}">
+        <ListView x:Name="ColectionItems" Grid.Row="1" Grid.Column="0" Margin="16" ItemsSource="{Binding People}">
             <ListView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="m:Person">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Top" Text="{Binding ID}" Width="20"/>
-                        <TextBlock VerticalAlignment="Bottom" Text="{Binding Name}"/>
+                        <TextBlock VerticalAlignment="Top" Text="{x:Bind ID}" Width="20"/>
+                        <TextBlock VerticalAlignment="Bottom" Text="{x:Bind Name, Mode=TwoWay}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -48,12 +49,14 @@
             <Button Content="Reset Collection" />
         </StackPanel>
 
-        <ListView x:Name="DBItems" Grid.Row="4" Grid.Column="0" Margin="16" ItemsSource="{Binding PeopleDB}">
+        <ListView x:Name="DBItems" Grid.Row="4" Grid.Column="0" Margin="16" ItemsSource="{Binding PeopleDB}"
+                  SelectedItem="null">
             <ListView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="m:Person">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock VerticalAlignment="Top" Text="{Binding ID}" Width="20"/>
-                        <TextBlock VerticalAlignment="Bottom" Text="{Binding Name}"/>
+                        <TextBlock VerticalAlignment="Top" 
+                                   Text="{x:Bind ID}" Width="20"/>
+                        <TextBlock VerticalAlignment="Bottom" Text="{x:Bind Name, Mode=TwoWay}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -67,11 +70,14 @@
         <StackPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Orientation="Vertical">
             <StackPanel Orientation="Horizontal" Margin="24,8,8,8">
                 <TextBlock Text="Name" Height="20" Width="50" Margin="4" FontSize="16"/>
-                <TextBox Height="20" Width="200" Margin="4"/>
+                <TextBox Height="20" Width="200" Margin="4"
+                         Text="{Binding Path=SelectedItem.Name, ElementName=ColectionItems, Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="24,8,8,8">
                 <TextBlock Text="ID" Height="20" Width="50" Margin="4" FontSize="16"/>
-                <TextBox  Height="20" Width="200" Margin="4"/>
+                <TextBox  Height="20" Width="200" Margin="4"
+                          Text="{Binding Path=SelectedItem.ID, ElementName=ColectionItems }"
+                          IsEnabled="False"/>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Margin="24,24">
