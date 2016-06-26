@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace SQLiteBinding.Models
     {
         public ObservableCollection<Person> people { get; set; }
         public ObservableCollection<Person> peopleDB { get; set; }
-        PeopleDB _db;
+        public PeopleDB _db;
 
         public async Task InitializeContextAsync()
         {
@@ -30,6 +31,7 @@ namespace SQLiteBinding.Models
             var fname = "peopleDB.sqlite";
             var dbPath = Path.Combine(path, fname);
             _db = new PeopleDB(dbPath);
+            Debug.WriteLine(path);
 
             this.peopleDB = new ObservableCollection<Person>();
 

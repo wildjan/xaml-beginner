@@ -5,15 +5,95 @@ using System.Text;
 using System.Threading.Tasks;
 using SQLiteBinding.Models;
 using System.Collections.ObjectModel;
+using Windows.UI.Popups;
 
 namespace SQLiteBinding.ViewModels
 {
     class MainPageViewModel : ViewModel
     {
+        public DelegateCommand<Person> DeleteSelectedCommand { get; private set; }
+        public DelegateCommand<string> ClearPeopleCommand { get; private set; }
+        public DelegateCommand<string> ResetPeopleCommand { get; private set; }
+        public DelegateCommand<Person> UpdateInCollectionCommand { get; private set; }
+        public DelegateCommand<Person> AddToCollectionCommand { get; private set; }
+
+        public MainPageViewModel()
+        {
+            DeleteSelectedCommand = new DelegateCommand<Person>(DeleteSelectedExecute);
+            ClearPeopleCommand = new DelegateCommand<string>(ClearPeopleExecute, ClearPeopleCanExecute);
+            ResetPeopleCommand = new DelegateCommand<string>(ResetPeopleExecute, ResetPeopleCanExecute);
+            UpdateInCollectionCommand = new DelegateCommand<Person>(UpdateInCollectionExecute, UpdateInCollectionCanExecute);
+            AddToCollectionCommand = new DelegateCommand<Person>(AddToCollectionExecute, AddToCollectionCanExecute);
+        }
+
+        private bool AddToCollectionCanExecute(Person editedPerson)
+        {
+            return true; // editedPerson == null;
+        }
+
+        private void AddToCollectionExecute(Person editedPerson)
+        {
+            int newID = People.Count;
+            string newName = "Edit the new name";
+            Person newPerson = new Person() { ID = newID, Name = newName };
+            People.Add(newPerson);
+            editedPerson = People[newID];
+            NotifyPropertyChanged("People");
+        }
+
+        private bool UpdateInCollectionCanExecute(Person editCollectionItem)
+        {
+            return editCollectionItem != null;
+        }
+
+        private void UpdateInCollectionExecute(Person editCollectionItem)
+        {
+            People[editCollectionItem.ID].Name = editCollectionItem.Name;
+            NotifyPropertyChanged("People");
+        }
+
+        private void DeleteSelectedExecute(Person selectedPerson)
+        {
+            if (selectedPerson != null)
+            {
+                People.Remove(selectedPerson);
+            }
+        }
+        private bool ClearPeopleCanExecute(string arg)
+        {
+            return this._people.Count > 0;
+        }
+
+        private void ClearPeopleExecute(string message)
+        {
+            this._people.Clear();
+            new MessageDialog(message).ShowAsync();
+            ClearPeopleCommand?.RaiseCanExecuteChanged();
+            ResetPeopleCommand?.RaiseCanExecuteChanged();
+        }
+        private bool ResetPeopleCanExecute(string arg)
+        {
+            return this._people.Count == 0;
+        }
+
+        private void ResetPeopleExecute(string message)
+        {
+            People = new ObservableCollection<Person>()
+            {
+                new Person() { ID = 0, Name = "Chris" },
+                new Person() { ID = 1, Name = "Sage" },
+                new Person() { ID = 2, Name = "Daren"  }
+            };
+            NotifyPropertyChanged("People");
+            new MessageDialog(message).ShowAsync();
+            ResetPeopleCommand.RaiseCanExecuteChanged();
+            ClearPeopleCommand.RaiseCanExecuteChanged();
+        }
         protected override void OnDataLoaded()
         {
-            this.People = base.Repository.people;
-            this.PeopleDB = base.Repository.peopleDB;
+            People = base.Repository.people;
+            ClearPeopleCommand?.RaiseCanExecuteChanged();
+            PeopleDB = base.Repository.peopleDB;
         }
 
         private ObservableCollection<Person> _people;
@@ -21,7 +101,7 @@ namespace SQLiteBinding.ViewModels
 
         public ObservableCollection<Person> People
         {
-            get { return _people; }
+            get { return this._people; }
             set
             {
                 this._people = value;
@@ -39,42 +119,16 @@ namespace SQLiteBinding.ViewModels
             }
         }
 
-        private Person _selectedPerson;
-        private string _editNameText = String.Empty;
-        private string _editIDText = String.Empty;
-
-        public Person SelectedPerson
+        private Person _editCollectionItem;
+        public Person EditCollectionItem
         {
-            get { return this._selectedPerson; }
+            get { return this._editCollectionItem; }
             set
             {
-                if (this._selectedPerson != null)
-                {
-                    this._selectedPerson = value;
-                    EditIDText = _selectedPerson.ID.ToString();
-                    EditNameText = this._selectedPerson.Name;
-                        }
-                base.NotifyPropertyChanged("SelectedPerson");
-            }
-        }
-
-        public string EditNameText
-        {
-            get { return this._editNameText; }
-            set
-            {
-                if (this._editIDText != value) this._editNameText = value;
-                base.NotifyPropertyChanged("EditNameText");
-            }
-        }
-
-        public string EditIDText
-        {
-            get { return this._editIDText; }
-            private set
-            {
-                if (this._editIDText != value) this._editIDText = value;
+                if (this._editCollectionItem != value) this._editCollectionItem = value;
+                base.NotifyPropertyChanged("EditCollectionItem");
             }
         }
     }
 }
+

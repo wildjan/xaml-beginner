@@ -7,7 +7,7 @@ namespace SQLiteBinding.Models
 {
     public class PeopleDB : SQLiteAsyncConnection, INotifyCollectionChanged
     {
-        private List<Person> _peopleDB;
+        private List<Person> _peopleDB = new List<Person>();
         public event NotifyCollectionChangedEventHandler CollectionChanged;
         public PeopleDB (string path) : base(path)
         {
@@ -28,12 +28,12 @@ namespace SQLiteBinding.Models
         {
             get
             {
-                return _peopleDB[index];
+                return this._peopleDB[index];
             }
             set
             {
                 var _originalPerson = _peopleDB[index];
-                _peopleDB[index] = value;
+                this._peopleDB[index] = value;
                 UpdateAsync(_peopleDB[index]);
                 NotifyCollectionChanged(NotifyCollectionChangedAction.Replace, _originalPerson, value);
             }
@@ -41,13 +41,13 @@ namespace SQLiteBinding.Models
         public void Create(Person person)
         {
             InsertAsync(person);
-            _peopleDB.Add(person);
+            this._peopleDB.Add(person);
             this.NotifyCollectionChanged(NotifyCollectionChangedAction.Add, person);
         }
          public void Remove(Person person)
         {
             DeleteAsync(person);
-            _peopleDB.Remove(person);
+            this._peopleDB.Remove(person);
             this.NotifyCollectionChanged(NotifyCollectionChangedAction.Remove, person);
         }
     }
